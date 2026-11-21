@@ -1,4 +1,4 @@
-<!-- The Side Bar -->
+﻿<!-- The Side Bar -->
 
 <aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
   <header class="profile-wrapper">
@@ -40,66 +40,38 @@
     </ul>
   </nav>
 
-  <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
-    {% unless site.theme_mode %}
-      <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
-        <i class="fas fa-adjust"></i>
-      </button>
+  <div class="sidebar-bottom d-flex flex-wrap align-items-center w-100" style="padding: 10px 14px; margin-top: auto; justify-content: center;">
+  <div class="advanced-dock" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 6px 14px; background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(12px); border: 1px solid rgba(0, 180, 216, 0.35); border-radius: 30px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);">
+    
+    <!-- Mode Toggle -->
+    <button type="button" class="btn btn-link nav-link dock-item dock-mode" aria-label="Switch Mode" id="mode-toggle" title="Toggle Light/Dark Mode" style="padding: 6px; color: #ffb703; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: none; background: transparent; transition: all 0.25s ease;">
+      <i class="fas fa-moon" style="font-size: 1.05rem;"></i>
+    </button>
+    
+    <span style="width: 1px; height: 18px; background: rgba(255, 255, 255, 0.15); margin: 0 4px;"></span>
 
-      {% if site.data.contact.size > 0 %}
-        <span class="icon-border"></span>
-      {% endif %}
-    {% endunless %}
+    <!-- GitHub -->
+    <a href="https://github.com/mongkolsingle10-max" class="dock-item dock-github" aria-label="github" target="_blank" rel="noopener noreferrer" title="GitHub: @mongkolsingle10-max" style="padding: 6px; color: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; text-decoration: none; transition: all 0.25s ease;">
+      <i class="fab fa-github" style="font-size: 1.15rem;"></i>
+    </a>
 
-    {% for entry in site.data.contact %}
-      {%- assign url = null -%}
+    <!-- Telegram -->
+    <a href="https://t.me/sambathmongkol" class="dock-item dock-telegram" aria-label="telegram" target="_blank" rel="noopener noreferrer" title="Telegram: @sambathmongkol" style="padding: 6px; color: #229ED9; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; text-decoration: none; transition: all 0.25s ease;">
+      <i class="fab fa-telegram-plane" style="font-size: 1.15rem;"></i>
+    </a>
 
-      {% case entry.type %}
-        {% when 'github', 'twitter' %}
-          {%- unless site[entry.type].username -%}
-            {%- continue -%}
-          {%- endunless -%}
-          {%- capture url -%}
-            https://{{ entry.type }}.com/{{ site[entry.type].username }}
-          {%- endcapture -%}
-        {% when 'email' %}
-          {%- unless site.social.email -%}
-            {%- continue -%}
-          {%- endunless -%}
-          {%- assign email = site.social.email | split: '@' -%}
-          {%- capture url -%}
-            javascript:location.href = 'mailto:' + ['{{ email[0] }}','{{ email[1] }}'].join('@')
-          {%- endcapture -%}
-        {% when 'rss' %}
-          {% assign url = '/feed.xml' | relative_url %}
-        {% else %}
-          {% assign url = entry.url %}
-      {% endcase %}
+    <!-- Phone -->
+    <a href="tel:0965481889" class="dock-item dock-phone" aria-label="call" title="Call: 096 548 1889" style="padding: 6px; color: #06d6a0; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; text-decoration: none; transition: all 0.25s ease;">
+      <i class="fas fa-phone-alt" style="font-size: 1rem;"></i>
+    </a>
 
-      {% if url %}
-        <a
-          href="{{ url }}"
-          aria-label="{{ entry.type }}"
-          {% assign link_types = '' %}
+    <!-- Email -->
+    <a href="mailto:sambathmongkol89@gmail.com" class="dock-item dock-email" aria-label="email" title="Email: sambathmongkol89@gmail.com" style="padding: 6px; color: #00b4d8; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; text-decoration: none; transition: all 0.25s ease;">
+      <i class="fas fa-envelope" style="font-size: 1.05rem;"></i>
+    </a>
 
-          {% unless entry.noblank %}
-            target="_blank"
-            {% assign link_types = 'noopener noreferrer' %}
-          {% endunless %}
-
-          {% if entry.type == 'mastodon' %}
-            {% assign link_types = link_types | append: ' me' | strip %}
-          {% endif %}
-
-          {% unless link_types == empty %}
-            rel="{{ link_types }}"
-          {% endunless %}
-        >
-          <i class="{{ entry.icon }}"></i>
-        </a>
-      {% endif %}
-    {% endfor %}
   </div>
-  <!-- .sidebar-bottom -->
+</div>
+<!-- .sidebar-bottom -->
 </aside>
 <!-- #sidebar -->

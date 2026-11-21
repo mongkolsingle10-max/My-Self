@@ -40,3 +40,44 @@ samp {
 .post-content {
   font-size: 0.85rem;
 }
+
+/* Modern Advanced Enhancements for Mongkol_rich */
+.site-title {
+  background: linear-gradient(135deg, #00b4d8, #9d4edd, #f72585);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+.site-title:hover {
+  filter: drop-shadow(0 0 8px rgba(0, 180, 216, 0.6));
+}
+.card-wrapper.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 12px;
+}
+.card-wrapper.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+.sidebar-bottom a:hover {
+  color: #00b4d8 !important;
+  transform: scale(1.15);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+/* === PERMANENTLY REMOVE SEARCH BAR === */
+#search,
+#search-trigger,
+#search-cancel,
+#search-result-wrapper,
+search#search {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
