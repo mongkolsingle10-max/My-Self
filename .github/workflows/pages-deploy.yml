@@ -1,4 +1,4 @@
-name: "Build, Security Audit & Deploy Pages"
+name: "Deploy Portfolio to GitHub Pages"
 
 on:
   push:
@@ -28,31 +28,25 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          submodules: true
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Verify Zero-Trust Security Assets
+      - name: Verify Zero-Trust Security & Bilingual Assets
         run: |
+          test -f static_site/index.html
           test -f static_site/assets/js/security-shield.js
           test -f static_site/assets/js/i18n-translator.js
           test -f static_site/.well-known/security.txt
           test -f static_site/404.html
-          echo "Zero-Trust Security Shield & Bilingual i18n assets verified."
-
-      - name: Prepare Production Artifact
-        run: |
-          mkdir -p "_site${{ steps.pages.outputs.base_path }}"
-          cp -r static_site/. "_site${{ steps.pages.outputs.base_path }}/"
+          touch static_site/.nojekyll
+          echo "All portfolio, security, and i18n assets verified."
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_site${{ steps.pages.outputs.base_path }}"
+          path: "static_site"
 
   deploy:
     environment:

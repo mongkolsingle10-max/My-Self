@@ -13,4 +13,4 @@ Disallow: /
 User-agent: Nuclei
 Disallow: /
 
-Sitemap: https://mongkolsingle10-max.github.io/sitemap.xml
+Sitemap: https://mongkolsingle10-max.github.io/My-Self/sitemap.xml

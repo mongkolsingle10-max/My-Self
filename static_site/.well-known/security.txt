@@ -2,5 +2,5 @@ Contact: mailto:sambathmongkol89@gmail.com
 Contact: https://t.me/sambathmongkol
 Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en, km
-Canonical: https://mongkolsingle10-max.github.io/.well-known/security.txt
-Policy: https://github.com/mongkolsingle10-max/mongkolsingle10-max.github.io/blob/main/SECURITY.md
+Canonical: https://mongkolsingle10-max.github.io/My-Self/.well-known/security.txt
+Policy: https://github.com/mongkolsingle10-max/My-Self/blob/main/SECURITY.md
