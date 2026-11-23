@@ -923,7 +923,76 @@
       }
     }
 
-    // 3. Touch Swipe-Left to Close Mobile Sidebar Drawer & Escape Support
+    // 3. Bulletproof Mobile Sidebar Drawer Controller (Fixes #sidebar-trigger on ALL pages!)
+    const sidebarTrigger = document.getElementById('sidebar-trigger');
+    const maskEl = document.getElementById('mask');
+
+    function setSidebarOpen(isOpen) {
+      const sb = document.getElementById('sidebar');
+      const m = document.getElementById('mask');
+      if (!sb) return;
+      document.body.toggleAttribute('sidebar-display', Boolean(isOpen));
+      sb.classList.toggle('z-2', Boolean(isOpen));
+      if (m) m.classList.toggle('d-none', !isOpen);
+      if (sidebarTrigger) {
+        sidebarTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+    }
+
+    function toggleSidebar(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
+      const currentlyOpen = document.body.hasAttribute('sidebar-display');
+      setSidebarOpen(!currentlyOpen);
+    }
+
+    if (sidebarTrigger) {
+      // Remove any broken or conflicting onclick handler and bind capture listener
+      sidebarTrigger.onclick = null;
+      sidebarTrigger.addEventListener('click', toggleSidebar, true);
+    }
+
+    if (maskEl) {
+      maskEl.onclick = null;
+      maskEl.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        setSidebarOpen(false);
+      }, true);
+    }
+
+    // Close sidebar cleanly when tapping a navigation link on mobile
+    if (sidebar) {
+      sidebar.querySelectorAll('nav a.nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (window.innerWidth <= 849) {
+            setSidebarOpen(false);
+          }
+        });
+      });
+    }
+
+    // Back-to-top button controller (ensures it works even when legacy Chirpy bundle exits early)
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 120) {
+          backToTop.classList.add('show');
+        } else {
+          backToTop.classList.remove('show');
+        }
+      }, { passive: true });
+      backToTop.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // 4. Touch Swipe Gestures (Swipe-Left to Close, Edge Swipe-Right to Open) & Escape Support
     let touchStartX = 0;
     let touchStartY = 0;
 
@@ -940,18 +1009,16 @@
       if (dy > 60) return;
 
       const isOpen = document.body.hasAttribute('sidebar-display');
-      const mask = document.getElementById('mask');
-      if (isOpen && dx < -65) {
-        if (mask) mask.click();
-        document.body.removeAttribute('sidebar-display');
+      if (isOpen && dx < -60) {
+        setSidebarOpen(false);
+      } else if (!isOpen && touchStartX < 28 && dx > 65 && window.innerWidth <= 849) {
+        setSidebarOpen(true);
       }
     }, { passive: true });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && document.body.hasAttribute('sidebar-display')) {
-        const mask = document.getElementById('mask');
-        if (mask) mask.click();
-        document.body.removeAttribute('sidebar-display');
+        setSidebarOpen(false);
       }
     });
   }

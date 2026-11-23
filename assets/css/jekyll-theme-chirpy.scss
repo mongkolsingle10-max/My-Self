@@ -562,7 +562,9 @@ div {
     background: rgba(0, 180, 216, 0.08) !important;
     border: 1px solid rgba(0, 180, 216, 0.25) !important;
     color: #38bdf8 !important;
+    text-decoration: none !important;
     flex-shrink: 0 !important;
+    cursor: pointer !important;
   }
 
   #topbar-title {
@@ -588,10 +590,19 @@ div {
     width: 270px !important;
     max-width: 84vw !important;
     z-index: 10010 !important;
+    transform: translateX(-100%) !important;
+    -webkit-transform: translateX(-100%) !important;
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 
-  [sidebar-display] #main-wrapper {
+  body[sidebar-display] #sidebar {
+    transform: translateX(0) !important;
+    -webkit-transform: translateX(0) !important;
+  }
+
+  body[sidebar-display] #main-wrapper {
     transform: translateX(min(270px, 84vw)) !important;
+    -webkit-transform: translateX(min(270px, 84vw)) !important;
   }
 
   #mask {
