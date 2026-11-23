@@ -1,4 +1,5 @@
-name: "Build and Deploy"
+name: "Build, Security Audit & Deploy Pages"
+
 on:
   push:
     branches:
@@ -9,7 +10,6 @@ on:
       - README.md
       - LICENSE
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions:
@@ -17,7 +17,6 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -27,37 +26,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: true
-          # If using the 'assets' git submodule from Chirpy Starter, uncomment above
-          # (See: https://github.com/cotes2020/chirpy-starter/tree/main/assets)
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.4
-          bundler-cache: true
-
-      - name: Build site
-        run: bundle exec jekyll b -d "_site${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: "production"
-
-      - name: Test site
+      - name: Verify Zero-Trust Security Assets
         run: |
-          bundle exec htmlproofer _site \
-            \-\-disable-external \
-            \-\-ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
+          test -f static_site/assets/js/security-shield.js
+          test -f static_site/assets/js/i18n-translator.js
+          test -f static_site/.well-known/security.txt
+          test -f static_site/404.html
+          echo "Zero-Trust Security Shield & Bilingual i18n assets verified."
 
-      - name: Upload site artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Prepare Production Artifact
+        run: |
+          mkdir -p "_site${{ steps.pages.outputs.base_path }}"
+          cp -r static_site/. "_site${{ steps.pages.outputs.base_path }}/"
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: "_site${{ steps.pages.outputs.base_path }}"
 

@@ -26,3 +26,6 @@ package-lock.json
 _sass/vendors
 assets/js/dist
 vendor/bundle/
+
+# Local WAF security audit logs
+logs/

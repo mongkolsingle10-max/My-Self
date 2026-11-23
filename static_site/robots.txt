@@ -1,5 +1,16 @@
 User-agent: *
-
+Allow: /
 Disallow: /norobots/
+Disallow: /logs/
 
-Sitemap: https://chmakorkrich.github.io/sitemap.xml
+# Block aggressive vulnerability scanners & unauthorized scrapers
+User-agent: sqlmap
+Disallow: /
+
+User-agent: Nikto
+Disallow: /
+
+User-agent: Nuclei
+Disallow: /
+
+Sitemap: https://mongkolsingle10-max.github.io/sitemap.xml

@@ -27,6 +27,12 @@ order: 4
     <span class="btn btn-outline-secondary btn-sm" style="border-radius: 20px; font-weight: 600; padding: 6px 18px;">
       📍 Phnom Penh, Cambodia 🇰🇭
     </span>
+    <button type="button" class="btn btn-warning btn-sm js-print-cv-btn no-print" style="border-radius: 20px; font-weight: 700; padding: 6px 18px; color: #0f172a;">
+      <i class="fas fa-file-pdf"></i> Print / Save CV (PDF)
+    </button>
+    <button type="button" class="btn btn-outline-success btn-sm js-open-security-modal no-print" style="border-radius: 20px; font-weight: 700; padding: 6px 18px;">
+      <i class="fas fa-shield-alt"></i> Zero-Trust Verified
+    </button>
   </div>
 </div>
 
