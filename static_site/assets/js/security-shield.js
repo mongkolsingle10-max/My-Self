@@ -841,6 +841,121 @@
     });
   }
 
+  // ============================================================================
+  // UNIVERSAL MOBILE UX, BOTTOM DOCK, SWIPE DRAWER & ACCESSIBILITY ENHANCER
+  // ============================================================================
+  function initMobileAndAccessibility() {
+    // 1. Accessible Skip-to-Main-Content Link
+    const mainEl = document.querySelector('main[aria-label="Main Content"]');
+    if (mainEl && !document.querySelector('.mongkol-skip-link')) {
+      if (!mainEl.id) mainEl.id = 'main-content';
+      const skip = document.createElement('a');
+      skip.href = '#' + mainEl.id;
+      skip.className = 'mongkol-skip-link no-print';
+      skip.textContent = 'Skip to main content';
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
+
+    // 2. Native-Style Mobile Bottom Quick-Navigation Bar (< 768px)
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar && !document.getElementById('mongkol-mobile-dock')) {
+      const homeNav = sidebar.querySelector('nav a[href*="index.html"]');
+      const base = homeNav && (homeNav.getAttribute('href') || '').startsWith('../') ? '../' : './';
+      const path = (window.location.pathname || '').toLowerCase();
+      const isAbout = path.includes('/about');
+      const isCat = path.includes('/categories');
+      const isHome = !isAbout && !isCat && !path.includes('/tags') && !path.includes('/archives');
+
+      const dock = document.createElement('nav');
+      dock.id = 'mongkol-mobile-dock';
+      dock.className = 'no-print';
+      dock.setAttribute('aria-label', 'Mobile Quick Navigation');
+      dock.innerHTML =
+        '<a href="' + base + 'index.html" class="m-dock-btn' + (isHome ? ' active-tab' : '') + '" data-i18n-en="Home" data-i18n-km="ទំព័រដើម">' +
+          '<i class="fas fa-home"></i><span>Home</span>' +
+        '</a>' +
+        '<a href="' + base + 'categories/" class="m-dock-btn' + (isCat ? ' active-tab' : '') + '" data-i18n-en="Skills" data-i18n-km="ជំនាញ">' +
+          '<i class="fas fa-layer-group"></i><span>Skills</span>' +
+        '</a>' +
+        '<a href="' + base + 'about/" class="m-dock-btn' + (isAbout ? ' active-tab' : '') + '" data-i18n-en="CV" data-i18n-km="ប្រវត្តិរូប">' +
+          '<i class="fas fa-id-card"></i><span>CV</span>' +
+        '</a>' +
+        '<button type="button" id="mobile-dock-search" class="m-dock-btn" data-i18n-en="Search" data-i18n-km="ស្វែងរក">' +
+          '<i class="fas fa-search"></i><span>Search</span>' +
+        '</button>' +
+        '<button type="button" id="mobile-dock-shield" class="m-dock-btn shield-tab" data-i18n-en="Shield" data-i18n-km="ការពារ">' +
+          '<i class="fas fa-shield-alt"></i><span>Shield</span>' +
+        '</button>';
+
+      document.body.appendChild(dock);
+
+      const mSearch = document.getElementById('mobile-dock-search');
+      if (mSearch) {
+        mSearch.addEventListener('click', function () {
+          const btn = document.getElementById('open-cmd-palette-btn');
+          if (btn) btn.click();
+        });
+      }
+
+      const mShield = document.getElementById('mobile-dock-shield');
+      if (mShield) {
+        mShield.addEventListener('click', function () {
+          const btn = document.getElementById('open-security-center-btn');
+          if (btn) btn.click();
+        });
+      }
+
+      function syncMobileDockLang(lang) {
+        const isKm = lang === 'km';
+        dock.querySelectorAll('.m-dock-btn').forEach(function (item) {
+          const label = item.querySelector('span');
+          if (label) {
+            label.textContent = isKm ? item.getAttribute('data-i18n-km') : item.getAttribute('data-i18n-en');
+          }
+        });
+      }
+
+      window.addEventListener('mongkol:langchange', function (e) {
+        syncMobileDockLang(e.detail && e.detail.lang);
+      });
+      if (window.MongkolI18n) {
+        syncMobileDockLang(window.MongkolI18n.getLanguage());
+      }
+    }
+
+    // 3. Touch Swipe-Left to Close Mobile Sidebar Drawer & Escape Support
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    document.addEventListener('touchstart', function (e) {
+      if (!e.touches || e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', function (e) {
+      if (!e.changedTouches || e.changedTouches.length !== 1) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+      if (dy > 60) return;
+
+      const isOpen = document.body.hasAttribute('sidebar-display');
+      const mask = document.getElementById('mask');
+      if (isOpen && dx < -65) {
+        if (mask) mask.click();
+        document.body.removeAttribute('sidebar-display');
+      }
+    }, { passive: true });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.hasAttribute('sidebar-display')) {
+        const mask = document.getElementById('mask');
+        if (mask) mask.click();
+        document.body.removeAttribute('sidebar-display');
+      }
+    });
+  }
+
   // Initialize All Security Layers Immediately
   enforceAntiClickjacking();
   enforcePrototypeGuard();
@@ -854,6 +969,7 @@
     injectGlobalWidgets();
     initInteractiveTerminal();
     initProjectFiltersAndForms();
+    initMobileAndAccessibility();
   }
 
   if (document.readyState === 'loading') {

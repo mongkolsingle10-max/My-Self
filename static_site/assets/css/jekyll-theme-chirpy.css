@@ -610,3 +610,462 @@ html[lang="km"] i:not(.fa):not(.fas):not(.fab):not(.far) {
 html[lang="km"] #sidebar ul li.nav-item a.nav-link {
   font-size: 0.94rem !important;
 }
+
+/* ============================================================================
+   UNIVERSAL MOBILE, FOLDABLE, TABLET & WCAG 2.1 ACCESSIBILITY ENGINE (v6)
+   Tested across 320px (iPhone SE) -> 430px (Pro Max) -> 768px (iPad) -> 4K
+   ============================================================================ */
+html,
+body {
+  overflow-x: clip !important;
+  max-width: 100% !important;
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+img,
+svg,
+video,
+canvas,
+pre {
+  max-width: 100%;
+}
+
+p,
+li,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+small,
+div {
+  overflow-wrap: break-word;
+}
+
+/* WCAG 2.1 High-Contrast Keyboard Focus Ring */
+:focus-visible {
+  outline: 2px solid #00b4d8 !important;
+  outline-offset: 2px !important;
+  border-radius: 6px;
+}
+
+/* Accessible Skip-to-Main-Content Link */
+.mongkol-skip-link {
+  position: fixed;
+  top: -100px;
+  left: 12px;
+  z-index: 10100;
+  background: linear-gradient(135deg, #00b4d8, #06d6a0);
+  color: #0b1120 !important;
+  font-weight: 800;
+  padding: 10px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: top 0.2s ease;
+}
+.mongkol-skip-link:focus {
+  top: 12px;
+}
+
+/* Safe-Area Notch / Dynamic Island Support */
+#topbar-wrapper {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+#sidebar {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Mobile Bottom Quick-Navigation Bar (Hidden on Desktop, Visible < 768px) */
+#mongkol-mobile-dock {
+  display: none;
+}
+
+/* === TABLET & MOBILE BREAKPOINT (<= 849px) === */
+@media (max-width: 849px) {
+  #topbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+    padding-left: 8px !important;
+    padding-right: 10px !important;
+  }
+
+  #sidebar-trigger {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 10px !important;
+    background: rgba(0, 180, 216, 0.08) !important;
+    border: 1px solid rgba(0, 180, 216, 0.25) !important;
+    color: #38bdf8 !important;
+    flex-shrink: 0 !important;
+  }
+
+  #topbar-title {
+    width: auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    font-size: 0.96rem !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 0 4px !important;
+  }
+
+  #mongkol-topbar-actions {
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  #sidebar {
+    width: 270px !important;
+    max-width: 84vw !important;
+    z-index: 10010 !important;
+  }
+
+  [sidebar-display] #main-wrapper {
+    transform: translateX(min(270px, 84vw)) !important;
+  }
+
+  #mask {
+    z-index: 10005 !important;
+    background: rgba(2, 6, 23, 0.65) !important;
+    backdrop-filter: blur(4px) !important;
+  }
+}
+
+/* === MOBILE PHONES (<= 767px) === */
+@media (max-width: 767px) {
+  /* Prevent iOS Safari forced auto-zoom on inputs */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  #main-wrapper .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  main[aria-label="Main Content"] {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  /* Show Native-Style Bottom Quick-Action Bar */
+  #mongkol-mobile-dock {
+    display: flex !important;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9990;
+    background: rgba(11, 17, 32, 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-top: 1px solid rgba(0, 180, 216, 0.25);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)) 8px;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.45);
+  }
+
+  [data-bs-theme=light] #mongkol-mobile-dock {
+    background: rgba(248, 250, 252, 0.95);
+    border-top-color: rgba(2, 132, 199, 0.22);
+    box-shadow: 0 -6px 22px rgba(15, 23, 42, 0.08);
+  }
+
+  #mongkol-mobile-dock .m-dock-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 54px;
+    min-height: 44px;
+    padding: 4px 6px;
+    border-radius: 12px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.68rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  [data-bs-theme=light] #mongkol-mobile-dock .m-dock-btn {
+    color: #475569;
+  }
+
+  #mongkol-mobile-dock .m-dock-btn i {
+    font-size: 1.05rem;
+  }
+
+  #mongkol-mobile-dock .m-dock-btn.active-tab,
+  #mongkol-mobile-dock .m-dock-btn:active {
+    color: #00b4d8 !important;
+    background: rgba(0, 180, 216, 0.12);
+  }
+
+  #mongkol-mobile-dock .m-dock-btn.shield-tab {
+    color: #06d6a0 !important;
+  }
+
+  /* Keep footer, toast & back-to-top clear above mobile dock */
+  footer[aria-label="Site Info"] {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  #back-to-top {
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
+  }
+
+  #mongkol-security-toast-container {
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 12px !important;
+    left: 12px !important;
+    max-width: calc(100% - 24px) !important;
+  }
+}
+
+/* === SMALL & STANDARD SMARTPHONES (<= 640px) === */
+@media (max-width: 640px) {
+  /* Hero Section Mobile Polish */
+  .hero-section {
+    padding: 1.4rem 1rem !important;
+    border-radius: 16px !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .hero-section > div {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.15rem !important;
+  }
+
+  .hero-section > div > div:last-child {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .hero-section h1 {
+    font-size: clamp(1.55rem, 6.5vw, 2.1rem) !important;
+  }
+
+  .hero-section p {
+    font-size: 0.94rem !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-section .btn {
+    flex: 1 1 calc(50% - 8px);
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px !important;
+    font-size: 0.84rem !important;
+  }
+
+  /* Zero-Trust Security Banner Mobile Stack */
+  .security-banner-card {
+    padding: 1.1rem !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .security-banner-card > div:first-child {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .security-banner-card > div:last-child {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  .security-banner-card .js-open-security-modal {
+    width: 100% !important;
+    min-height: 42px;
+    justify-content: center;
+  }
+
+  /* Responsive Grids: Prevent Overflow on 320px-430px Phones */
+  .portfolio-container > div[style*="minmax(200px"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  #projects-showcase > div[style*="grid-template-columns"],
+  .portfolio-container div[style*="minmax(280px"],
+  .portfolio-container div[style*="minmax(300px"],
+  .content div[style*="minmax(280px"],
+  .content div[style*="minmax(260px"],
+  #mongkol-secure-contact-form div[style*="minmax(220px"],
+  #mongkol-security-modal div[style*="minmax(280px"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .content div[style*="minmax(180px"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  /* Section Headings & Cards */
+  .portfolio-container h2,
+  .content h2,
+  article h1.dynamic-title {
+    font-size: clamp(1.25rem, 5vw, 1.65rem) !important;
+  }
+
+  .card-hover-effect,
+  .advanced-cat-card,
+  .timeline-card,
+  .js-proj-card,
+  .secure-contact-card {
+    padding: 1.1rem !important;
+    border-radius: 14px !important;
+  }
+
+  /* Archives Timeline Mobile Safe Alignment */
+  .advanced-timeline {
+    padding-left: 20px !important;
+    margin-left: 14px !important;
+  }
+
+  .advanced-timeline > div > div[style*="left: -44px"] {
+    left: -35px !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.78rem !important;
+  }
+
+  /* Interactive Terminal Mobile Optimization */
+  #mongkol-term-output {
+    padding: 12px !important;
+    font-size: 0.78rem !important;
+    max-height: 240px !important;
+  }
+
+  #mongkol-term-output pre {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+
+  #mongkol-term-form {
+    padding: 8px 10px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  #mongkol-term-form span {
+    font-size: 0.72rem !important;
+    max-width: 112px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Long URLs & Emails on About/CV Page */
+  .content a[href^="mailto:"],
+  .content a[href^="https://github.com"] {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+
+  /* Modals Full-Width Touch-Friendly on Phones */
+  #mongkol-security-modal,
+  #mongkol-cmd-modal {
+    padding: 10px !important;
+    align-items: flex-end !important;
+  }
+
+  #mongkol-security-modal > div,
+  #mongkol-cmd-modal > div {
+    max-height: 88dvh !important;
+    border-radius: 18px 18px 14px 14px !important;
+    padding: 16px !important;
+  }
+
+  #close-security-modal,
+  #close-cmd-modal {
+    min-width: 38px;
+    min-height: 38px;
+  }
+}
+
+/* === COMPACT PHONES (iPhone SE / Galaxy Fold Cover <= 460px) === */
+@media (max-width: 460px) {
+  #open-cmd-palette-btn kbd,
+  #open-cmd-palette-btn span {
+    display: none !important;
+  }
+
+  #open-cmd-palette-btn,
+  #open-security-center-btn {
+    padding: 5px 9px !important;
+    min-height: 34px;
+  }
+
+  .mongkol-lang-pill .lang-seg-btn {
+    padding: 3px 8px !important;
+    font-size: 0.72rem !important;
+  }
+
+  .hero-section .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Respect User Motion Preferences (WCAG 2.1) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  #mongkol-mobile-dock,
+  .mongkol-skip-link {
+    display: none !important;
+  }
+}
